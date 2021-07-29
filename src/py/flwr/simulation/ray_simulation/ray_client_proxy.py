@@ -90,13 +90,13 @@ class RayClientProxy(ClientProxy):
         return disconnect
 
 
-@ray.remote
+@ray.remote(num_gpus=1)
 def launch_and_get_params(client_type, cid, fed_dir):
     client = client_type(cid, fed_dir)
     return client.get_parameters()
 
 
-@ray.remote
+@ray.remote(num_gpus=1)
 def launch_and_fit(client_type, cid, fed_dir, parameters, config):
     client = client_type(cid, fed_dir)
     try:
@@ -107,7 +107,7 @@ def launch_and_fit(client_type, cid, fed_dir, parameters, config):
         raise ex
 
 
-@ray.remote
+@ray.remote(num_gpus=1)
 def launch_and_eval(client_type, cid, fed_dir, parameters, config):
     client = client_type(cid, fed_dir)
     try:
